@@ -114,7 +114,7 @@ class Multiplexer:
             time.sleep(wait_seconds)
             subprocess.run(enter_cmd, shell=False)
 
-    def read(self, pane_id: Annotated[int, Argument(help="Pane id")]) -> str:
+    def read(self, pane_id: Annotated[int, Argument(help="Pane id")]) -> None:
         """Read buffer of the target pane."""
         match self.backend:
             case "Zellij":
@@ -140,4 +140,4 @@ class Multiplexer:
         result = subprocess.run(
             cmd, shell=False, capture_output=True, text=True
         )
-        return result.stdout
+        print(result)
