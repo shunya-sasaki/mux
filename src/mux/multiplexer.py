@@ -137,7 +137,7 @@ class Multiplexer:
                 ]
             case _:
                 cmd = []
-        result = subprocess.run(
-            cmd, shell=False, capture_output=True, text=True
-        )
-        print(result)
+        result = subprocess.run(cmd, shell=False, capture_output=True)
+        result_str = result.stdout.decode("utf-8")
+        out = result_str.replace("\\n", "\n")
+        print(out)
