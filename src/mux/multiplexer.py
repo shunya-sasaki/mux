@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+import sys
 import time
 from typing import Annotated
 
@@ -138,6 +139,17 @@ class Multiplexer:
             case _:
                 cmd = []
         result = subprocess.run(cmd, shell=False, capture_output=True)
-        result_str = result.stdout.decode("utf-8")
+        try:
+            default_encoding = sys.getdefaultencoding()
+            result_str = result.stdout.decode(default_encoding)
+        except UnicodeDecodeError:
+            result_str = result.stdout.decode("utf-8")
         out = result_str.replace("\\n", "\n")
-        print(out)
+        try:
+            print(out)
+        except UnicodeEncodeError:
+            encoding = sys.stdout.encoding or "utf-8"
+            fallback = out.encode(encoding, errors="backslashreplace").decode(
+                encoding
+            )
+            print(fallback)
