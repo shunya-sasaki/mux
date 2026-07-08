@@ -51,7 +51,7 @@ class Multiplexer:
 
     def send(
         self,
-        pane_id: Annotated[int, Argument(help="Pane id")],
+        pane_id: Annotated[str, Argument(help="Pane id")],
         message: Annotated[str, Argument(help="Message contents.")],
         wait_seconds: Annotated[
             float,
@@ -134,9 +134,7 @@ class Multiplexer:
             time.sleep(wait_seconds)
             subprocess.run(enter_cmd, shell=False)
 
-    def read(
-        self, pane_id: Annotated[int | str, Argument(help="Pane id")]
-    ) -> None:
+    def read(self, pane_id: Annotated[str, Argument(help="Pane id")]) -> None:
         """Read buffer of the target pane."""
         match self.backend:
             case "Zellij":
