@@ -96,16 +96,16 @@ class Multiplexer:
             case "Herdr":
                 cmd = [
                     "herdr",
-                    "send-keys",
-                    "-t",
+                    "pane",
                     f"{pane_id}",
+                    "send-text",
                     f"{message}",
                 ]
                 enter_cmd = [
                     "herdr",
-                    "send-keys",
-                    "-t",
+                    "pane",
                     f"{pane_id}",
+                    "send-keys",
                     "Enter",
                 ]
             case "WezTerm":
