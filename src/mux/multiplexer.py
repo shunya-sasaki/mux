@@ -46,7 +46,7 @@ class Multiplexer:
             case "WezTerm":
                 pane_id = int(os.environ["WEZTERM_PANE"])
             case "Herdr":
-                pane_id = int(os.environ["HERDR_PANE_ID"])
+                pane_id = os.environ["HERDR_PANE_ID"]
         return pane_id
 
     def send(
