@@ -33,6 +33,8 @@ class Multiplexer:
             backend = "Tmux"
         elif (os.environ.get("WEZTERM_PANE", None)) is not None:
             backend = "WezTerm"
+        elif (os.environ.get("HERDR_PANE_ID", None)) is not None:
+            backend = "Herdr"
         return backend
 
     def _detect_self_pane_id(self):
@@ -43,6 +45,8 @@ class Multiplexer:
                 pane_id = int(os.environ["TMUX_PANE"].replace("%", ""))
             case "WezTerm":
                 pane_id = int(os.environ["WEZTERM_PANE"])
+            case "Herdr":
+                pane_id = int(os.environ["HERDR_PANE_ID"])
         return pane_id
 
     def send(
@@ -89,6 +93,21 @@ class Multiplexer:
                     f"{pane_id}",
                     "Enter",
                 ]
+            case "Herdr":
+                cmd = [
+                    "herdr",
+                    "send-keys",
+                    "-t",
+                    f"{pane_id}",
+                    f"{message}",
+                ]
+                enter_cmd = [
+                    "herdr",
+                    "send-keys",
+                    "-t",
+                    f"{pane_id}",
+                    "Enter",
+                ]
             case "WezTerm":
                 cmd = [
                     "wezterm",
@@ -115,7 +134,9 @@ class Multiplexer:
             time.sleep(wait_seconds)
             subprocess.run(enter_cmd, shell=False)
 
-    def read(self, pane_id: Annotated[int, Argument(help="Pane id")]) -> None:
+    def read(
+        self, pane_id: Annotated[int | str, Argument(help="Pane id")]
+    ) -> None:
         """Read buffer of the target pane."""
         match self.backend:
             case "Zellij":
@@ -136,6 +157,8 @@ class Multiplexer:
                     "--pane-id",
                     f"{pane_id}",
                 ]
+            case "Herdr":
+                cmd = ["herdr", "read", f"{pane_id}"]
             case _:
                 cmd = []
         result = subprocess.run(cmd, shell=False, capture_output=True)
