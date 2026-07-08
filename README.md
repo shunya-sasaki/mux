@@ -1,7 +1,7 @@
 # mux
 
 A unified CLI to send keystrokes to and read the buffer of panes
-across Tmux, Zellij, and WezTerm.
+across Tmux, Zellij, WezTerm, and Herdr.
 
 ## 📦 Requirements
 
@@ -14,6 +14,8 @@ You need **at least one** of the supported multiplexers
   — terminal workspace; panes are driven via `zellij action`.
 - [WezTerm](https://wezterm.org/)
   — GPU-accelerated terminal whose built-in multiplexer is controlled via `wezterm cli`.
+- [Herdr](https://herdr.dev/)
+  — terminal multiplexer whose panes are driven via `herdr pane send-keys` / `herdr pane read`.
 
 ## ⚙️ Setup
 
@@ -39,6 +41,7 @@ pipx install git+https://github.com/shunya-sasaki/mux
 - [Tmux](https://github.com/tmux/tmux)
 - [Zellij](https://zellij.dev/)
 - [WezTerm](https://wezterm.org/)
+- [Herdr](https://herdr.dev/)
 
 ## 📄 License
 
